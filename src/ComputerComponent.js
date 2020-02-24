@@ -1,5 +1,6 @@
 import React from 'react'
 import slugify from "slugify";
+import FeatureItem from "./FeatureItem";
 
 class ComputerComponent extends React.Component {
     render() {
@@ -8,19 +9,14 @@ class ComputerComponent extends React.Component {
             const options = this.props.features[feature].map(item => {
                 const itemHash = slugify(JSON.stringify(item));
                 return (
-                    <div key={itemHash} className="feature__item">
-                        <input
-                            type="radio"
-                            id={itemHash}
-                            className="feature__option"
-                            name={slugify(feature)}
-                            checked={item.name === this.props.selected[feature].name}
-                            onChange={e => this.props.update(feature, item)}
-                        />
-                        <label htmlFor={itemHash} className="feature__label">
-                            {item.name} ({this.props.format.format(item.cost)})
-                        </label>
-                    </div>
+                    <FeatureItem
+                        id={itemHash}
+                        update={this.props.update}
+                        item={item}
+                        feature={feature}
+                        format={this.props.format}
+                        selected={this.props.selected}
+                    />
                 );
             });
             return (
